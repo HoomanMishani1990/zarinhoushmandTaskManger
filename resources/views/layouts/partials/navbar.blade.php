@@ -13,7 +13,7 @@
                 <div class="nav-item navbar-search-wrapper mb-0">
                     <a class="nav-item nav-link search-toggler px-0" href="javascript:void(0);">
                         <i class="bx bx-search-alt bx-sm"></i>
-                        <span class="d-none d-md-inline-block text-muted">جستجو</span>
+                        <span class="d-none d-md-inline-block text-muted">{{ __('Search') }}</span>
                     </a>
                 </div>
             </div>
@@ -32,30 +32,21 @@
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
                             <a class="dropdown-item" href="{{ route('profile.edit') }}">
-                                <div class="d-flex">
-                                    <div class="flex-shrink-0 me-3">
-                                        <div class="avatar avatar-online">
-                                            <img src="{{ auth()->user()->profile_photo_url }}" alt="profile" class="rounded-circle">
-                                        </div>
-                                    </div>
-                                    <div class="flex-grow-1">
-                                        <span class="fw-semibold d-block">{{ auth()->user()->name }}</span>
-                                        <small class="text-muted">{{ auth()->user()->role }}</small>
-                                    </div>
-                                </div>
+                                <i class="bx bx-user me-2"></i>
+                                <span class="align-middle">{{ __('Profile') }}</span>
                             </a>
                         </li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <a class="dropdown-item" href="{{ route('profile.edit') }}">
                                 <i class="bx bx-user me-2"></i>
-                                <span class="align-middle">پروفایل من</span>
+                                <span class="align-middle">{{ __('Profile Settings') }}</span>
                             </a>
                         </li>
                         <li>
                             <a class="dropdown-item" href="{{ route('profile.password') }}">
                                 <i class="bx bx-lock me-2"></i>
-                                <span class="align-middle">تغییر رمز عبور</span>
+                                <span class="align-middle">{{ __('Change Password') }}</span>
                             </a>
                         </li>
                         <li><hr class="dropdown-divider"></li>
@@ -65,7 +56,7 @@
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                    onclick="event.preventDefault(); this.closest('form').submit();">
                                     <i class="bx bx-power-off me-2"></i>
-                                    <span class="align-middle">خروج</span>
+                                    <span class="align-middle">{{ __('Logout') }}</span>
                                 </a>
                             </form>
                         </li>

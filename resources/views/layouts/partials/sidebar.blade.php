@@ -25,7 +25,7 @@
         <li class="menu-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
             <a href="{{ route('dashboard') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div>داشبورد</div>
+                <div>{{ __('Dashboard') }}</div>
             </a>
         </li>
 
@@ -33,7 +33,7 @@
         <li class="menu-item {{ request()->routeIs('projects.*') ? 'active' : '' }}">
             <a href="{{ route('projects.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-collection"></i>
-                <div>پروژه‌ها</div>
+                <div>{{ __('Projects') }}</div>
             </a>
         </li>
 
@@ -41,7 +41,7 @@
         <li class="menu-item {{ request()->routeIs('tasks.*') ? 'active' : '' }}">
             <a href="{{ route('tasks.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-check-square"></i>
-                <div>وظایف</div>
+                <div>{{ __('Tasks') }}</div>
             </a>
         </li>
 
@@ -49,34 +49,22 @@
         <li class="menu-item {{ request()->routeIs('kanban.*') ? 'active' : '' }}">
             <a href="{{ route('kanban.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-grid"></i>
-                <div>تخته کانبان</div>
+                <div>{{ __('Kanban Board') }}</div>
             </a>
         </li>
 
         @if(auth()->user()->isAdmin())
         <!-- Admin Section -->
         <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">مدیریت</span>
+            <span class="menu-header-text">{{ __('Admin Panel') }}</span>
         </li>
 
         <!-- User Management -->
-        <li class="menu-item {{ request()->routeIs('admin.users.*') ? 'active open' : '' }}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
+        <li class="menu-item {{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+            <a href="{{ route('admin.users.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>
-                <div>کاربران</div>
+                <div>{{ __('User Management') }}</div>
             </a>
-            <ul class="menu-sub">
-                <li class="menu-item {{ request()->routeIs('admin.users.index') ? 'active' : '' }}">
-                    <a href="{{ route('admin.users.index') }}" class="menu-link">
-                        <div>لیست کاربران</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ request()->routeIs('admin.users.create') ? 'active' : '' }}">
-                    <a href="{{ route('admin.users.create') }}" class="menu-link">
-                        <div>افزودن کاربر</div>
-                    </a>
-                </li>
-            </ul>
         </li>
         @endif
 
