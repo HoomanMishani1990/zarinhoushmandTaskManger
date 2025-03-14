@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Project;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Project\StoreProjectRequest;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use App\Services\ProjectService;
@@ -36,9 +37,12 @@ use Illuminate\Http\JsonResponse;
  */
 class ProjectController extends Controller
 {
-    public function __construct(
-        private ProjectService $projectService
-    ) {}
+    private ProjectService $projectService;
+
+    public function __construct(ProjectService $projectService)
+    {
+        $this->projectService = $projectService;
+    }
 
     public function index(): JsonResponse
     {
@@ -56,5 +60,14 @@ class ProjectController extends Controller
         return response()->json([
             'data' => new ProjectResource($project)
         ]);
+    }
+
+    public function __invoke(StoreProjectRequest $request): JsonResponse
+    {
+        $project = $this->projectService->createProject($request->validated());
+
+        return response()->json([
+            'data' => new ProjectResource($project)
+        ], 201);
     }
 } 

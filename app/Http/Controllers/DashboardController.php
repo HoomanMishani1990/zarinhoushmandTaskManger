@@ -13,7 +13,8 @@ class DashboardController extends Controller
     public function __invoke()
     {
         $projects = $this->projectService->getUserProjects(auth()->id());
-        
+        // return $projects;
+
         return view('dashboard', compact('projects'));
     }
 } 

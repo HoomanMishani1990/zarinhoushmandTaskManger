@@ -5,22 +5,26 @@ namespace App\Http\Controllers\Project;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Project\StoreProjectRequest;
 use App\Services\ProjectService;
+use Illuminate\Http\RedirectResponse;
 
 class StoreProjectController extends Controller
 {
-    public function __construct(
-        private ProjectService $projectService
-    ) {}
+    private ProjectService $projectService;
 
-    public function __invoke(StoreProjectRequest $request)
+    public function __construct(ProjectService $projectService)
     {
-        $project = $this->projectService->create(
-            $request->validated(),
-            auth()->id()
-        );
+        $this->projectService = $projectService;
+    }
+
+    /**
+     * Store a newly created project in storage.
+     */
+    public function __invoke(StoreProjectRequest $request): RedirectResponse
+    {
         
-        return redirect()
-            ->route('projects.show', $project)
-            ->with('success', 'Project created successfully');
+
+        $this->projectService->createProject($request->validated());
+
+        return redirect()->route('projects.index')->with('success', __('پروژه با موفقیت ایجاد شد.'));
     }
 } 

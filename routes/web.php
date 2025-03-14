@@ -7,7 +7,9 @@ use App\Http\Controllers\Project\{
     ShowProjectController,
     StoreProjectController,
     UpdateProjectController,
-    DeleteProjectController
+    DeleteProjectController,
+    EditProjectController,
+    CreateProjectController
 };
 use App\Http\Controllers\Task\{
     StoreTaskController,
@@ -35,11 +37,17 @@ Route::middleware(['auth'])->group(function () {
     
     // Projects
     Route::prefix('projects')->name('projects.')->group(function () {
+        Route::get('/create', CreateProjectController::class)->name('create');
+        Route::post('/projects', StoreProjectController::class)->name('store');
+        
         Route::get('/', IndexProjectController::class)->name('index');
         Route::get('/{project}', ShowProjectController::class)->name('show');
         Route::post('/', StoreProjectController::class)->name('store');
         Route::put('/{project}', UpdateProjectController::class)->name('update');
         Route::delete('/{project}', DeleteProjectController::class)->name('delete');
+        Route::get('/{project}/edit', EditProjectController::class)->name('edit');
+
+
     });
     
     // Tasks
@@ -63,6 +71,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-read');
     Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
     Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
+
 });
 
 require __DIR__.'/auth.php';

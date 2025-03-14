@@ -13,10 +13,12 @@ class ProjectResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description,
+            'start_date' => $this->start_date,
+            'deadline' => $this->deadline,
+            'status' => $this->status,
+            'user_id' => $this->user_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'tasks' => TaskResource::collection($this->whenLoaded('tasks')),
-            'user' => new UserResource($this->whenLoaded('user')),
         ];
     }
 } 

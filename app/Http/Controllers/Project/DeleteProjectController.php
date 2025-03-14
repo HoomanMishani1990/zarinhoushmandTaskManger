@@ -16,7 +16,7 @@ class DeleteProjectController extends Controller
     {
         $this->authorize('delete', $project);
         
-        $this->projectService->delete($project);
+        $this->projectService->deleteProject($project);
         
         return redirect()
             ->route('projects.index')

@@ -67,7 +67,6 @@
     "High": "زیاد",
     "Medium": "متوسط",
     "Low": "کم",
-    "Deadline": "مهلت",
     "Assigned To": "محول شده به",
     "Comments": "نظرات",
     "Add Comment": "افزودن نظر",
@@ -97,6 +96,16 @@
     "Save Changes": "ذخیره تغییرات",
     "Project successfully created": "پروژه با موفقیت ایجاد شد",
     "Project successfully updated": "پروژه با موفقیت بروزرسانی شد",
-    "Project successfully deleted": "پروژه با موفقیت حذف شد"
-    
+    "Project successfully deleted": "پروژه با موفقیت حذف شد",
+
+    "Project Information": "اطلاعات پروژه",
+    "Client Name": "نام مشتری",
+    "Total Budget": "بودجه کل",
+    "Start Date": "تاریخ شروع",
+    "Deadline": "مهلت تحویل",
+    "Total Hours": "ساعات کل",
+    "Spent Hours": "ساعات صرف شده",
+    "Total Tasks": "تعداد کل وظایف",
+    "Completed Tasks": "تعداد وظایف تکمیل شده",
+    "Progress Percentage": "درصد پیشرفت"
 } 

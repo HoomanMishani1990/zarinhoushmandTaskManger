@@ -28,41 +28,55 @@ class TaskApiTest extends TestCase
 
     public function test_can_get_tasks(): void
     {
-        $task = Task::factory()->create([
-            'project_id' => $this->project->id
-        ]);
+        $user = User::factory()->create();
+        Task::factory()->count(3)->create(['user_id' => $user->id]);
 
-        $response = $this->getJson('/api/tasks');
+        $response = $this->actingAs($user, 'sanctum')
+            ->getJson(route('tasks.index'));
 
-        $response->assertOk()
+        $response->assertStatus(200)
             ->assertJsonStructure([
-                'data' => [
-                    '*' => [
-                        'id',
-                        'title',
-                        'description',
-                        'priority',
-                        'due_date',
-                        'is_completed'
-                    ]
+                '*' => [
+                    'id',
+                    'name',
+                    'description',
+                    'status',
+                    'project_id',
+                    'user_id',
                 ]
             ]);
     }
 
     public function test_can_create_task(): void
     {
-        $response = $this->postJson('/api/tasks', [
-            'title' => 'Test Task',
-            'description' => 'Test Description',
-            'priority' => 'high',
-            'due_date' => now()->addDays(7)->toDateString(),
-            'project_id' => $this->project->id
-        ]);
+        $user = User::factory()->create();
+        $project = Project::factory()->create(['user_id' => $user->id]);
 
-        $response->assertCreated();
+        $taskData = [
+            'name' => 'New Task',
+            'description' => 'Task Description',
+            'status' => 'todo',
+            'project_id' => $project->id,
+        ];
+
+        $response = $this->actingAs($user, 'sanctum')
+            ->postJson(route('tasks.store'), $taskData);
+
+        $response->assertStatus(201)
+            ->assertJsonStructure([
+                'data' => [
+                    'id',
+                    'name',
+                    'description',
+                    'status',
+                    'project_id',
+                    'user_id',
+                ]
+            ]);
+
         $this->assertDatabaseHas('tasks', [
-            'title' => 'Test Task',
-            'project_id' => $this->project->id
+            'name' => 'New Task',
+            'user_id' => $user->id,
         ]);
     }
 } 

@@ -1,65 +1,40 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4">
-        <span class="text-muted fw-light">{{ __('Projects') }} /</span> {{ __('Create New Project') }}
-    </h4>
-
-    <div class="row">
-        <div class="col-md-12">
-            <div class="card mb-4">
-                <div class="card-body">
-                    <form action="{{ route('projects.store') }}" method="POST">
-                        @csrf
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">{{ __('Project Name') }}</label>
-                                <input type="text" name="name" class="form-control" value="{{ old('name') }}" 
-                                       placeholder="{{ __('Enter project name') }}">
-                                @error('name')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">{{ __('Status') }}</label>
-                                <select name="status" class="form-select">
-                                    <option value="todo">{{ __('Todo') }}</option>
-                                    <option value="in_progress">{{ __('In Progress') }}</option>
-                                    <option value="done">{{ __('Done') }}</option>
-                                </select>
-                                @error('status')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="col-md-12 mb-3">
-                                <label class="form-label">{{ __('Description') }}</label>
-                                <textarea name="description" class="form-control" rows="4" 
-                                          placeholder="{{ __('Enter project description') }}">{{ old('description') }}</textarea>
-                                @error('description')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">{{ __('Deadline') }}</label>
-                                <input type="date" name="deadline" class="form-control" value="{{ old('deadline') }}">
-                                @error('deadline')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="mt-4">
-                            <button type="submit" class="btn btn-primary me-2">{{ __('Create Project') }}</button>
-                            <a href="{{ route('projects.index') }}" class="btn btn-outline-secondary">{{ __('Cancel') }}</a>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<div class="container">
+    <h4 class="fw-bold">{{ __('ایجاد پروژه جدید') }}</h4>
+    <form action="{{ route('projects.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <input type="hidden" name="user_id" value="{{ auth()->id() }}">
+        <div class="mb-3">
+            <label for="name" class="form-label">{{ __('نام پروژه') }}</label>
+            <input type="text" class="form-control" id="name" name="name" required>
         </div>
-    </div>
+        <div class="mb-3">
+            <label for="client_name" class="form-label">{{ __('نام مشتری') }}</label>
+            <input type="text" class="form-control" id="client_name" name="client_name">
+        </div>
+        <div class="mb-3">
+            <label for="total_budget" class="form-label">{{ __('بودجه کل') }}</label>
+            <input type="number" class="form-control" id="total_budget" name="total_budget" step="0.01">
+        </div>
+        <div class="mb-3">
+            <label for="start_date" class="form-label">{{ __('تاریخ شروع') }}</label>
+            <input type="date" class="form-control" id="start_date" name="start_date" required>
+        </div>
+        <div class="mb-3">
+            <label for="deadline" class="form-label">{{ __('مهلت') }}</label>
+            <input type="date" class="form-control" id="deadline" name="deadline" required>
+        </div>
+        <div class="mb-3">
+            <label for="description" class="form-label">{{ __('توضیحات') }}</label>
+            <textarea class="form-control" id="description" name="description"></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="image_path" class="form-label">{{ __('تصویر') }}</label>
+            <input type="file" class="form-control" id="image_path" name="image_path">
+        </div>
+        <button type="submit" class="btn btn-primary">{{ __('ذخیره') }}</button>
+    </form>
 </div>
 @endsection 

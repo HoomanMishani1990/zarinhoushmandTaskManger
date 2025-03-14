@@ -23,7 +23,12 @@ class StoreProjectRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string']
+            'client_name' => ['nullable', 'string', 'max:255'],
+            'total_budget' => ['nullable', 'numeric'],
+            'start_date' => ['required', 'date'],
+            'deadline' => ['required', 'date', 'after_or_equal:start_date'],
+            'description' => ['nullable', 'string'],
+            'image_path' => ['nullable', 'image', 'max:2048'],
         ];
     }
 
@@ -33,8 +38,9 @@ class StoreProjectRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'The project name is required.',
-            'name.max' => 'The project name cannot be longer than 255 characters.'
+            'name.required' => 'نام پروژه الزامی است',
+            'name.max' => 'نام پروژه نمی‌تواند بیشتر از 255 کاراکتر باشد',
+            'deadline.after_or_equal' => 'مهلت باید بعد از تاریخ شروع باشد',
         ];
     }
 } 

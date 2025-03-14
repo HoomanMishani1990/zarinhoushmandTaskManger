@@ -11,7 +11,7 @@ class UpdateProjectRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->can('update', $this->route('project'));
     }
 
     /**
@@ -23,7 +23,12 @@ class UpdateProjectRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string']
+            'client_name' => ['nullable', 'string', 'max:255'],
+            'total_budget' => ['nullable', 'numeric', 'min:0'],
+            'start_date' => ['required', 'date'],
+            'deadline' => ['required', 'date', 'after:start_date'],
+            'description' => ['required', 'string'],
+            'status' => ['required', 'in:todo,in_progress,done'],
         ];
     }
 
@@ -33,8 +38,14 @@ class UpdateProjectRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'The project name is required.',
-            'name.max' => 'The project name cannot be longer than 255 characters.'
+            'name.required' => 'نام پروژه الزامی است',
+            'name.max' => 'نام پروژه نمی‌تواند بیشتر از 255 کاراکتر باشد',
+            'start_date.required' => 'تاریخ شروع الزامی است',
+            'deadline.required' => 'تاریخ پایان الزامی است',
+            'deadline.after' => 'تاریخ پایان باید بعد از تاریخ شروع باشد',
+            'description.required' => 'توضیحات پروژه الزامی است',
+            'status.required' => 'وضعیت پروژه الزامی است',
+            'status.in' => 'وضعیت پروژه نامعتبر است',
         ];
     }
 } 

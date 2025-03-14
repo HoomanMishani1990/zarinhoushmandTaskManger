@@ -11,7 +11,8 @@
         "laravel/framework": "*",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.10.1",
-        "morilog/jalali": "^3.4"
+        "morilog/jalali": "^3.4",
+        "prettus/l5-repository": "^2.10"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
