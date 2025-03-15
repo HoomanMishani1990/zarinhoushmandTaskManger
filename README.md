@@ -8,9 +8,9 @@ A comprehensive task management system built with Laravel, featuring project org
 ![API Documentation for Task Management System](/public/doc/1.png)
 *API Documentation for Task Management System*
 
-### Project Dashboard
-![Project Dashboard](/public/doc/2.png)
-*Overview of all projects with progress tracking and team assignments*
+### Postgres Database
+![Postgres Database](/public/doc/2.png)
+*Pgadmin4 panel*
 
 ### Task List View
 ![Task List](/public/doc/3.png)
@@ -20,13 +20,13 @@ A comprehensive task management system built with Laravel, featuring project org
 ![Team Management](/public/doc/4.png)
 *Manage team members and their project assignments*
 
-### Project Details
-![Project Details](/public/doc/5.png)
-*Detailed view of project progress, tasks, and team members*
+### Unit tests
+![ Unit tests](/public/doc/5.png)
+*test list*
 
-### Task Analytics
-![Task Analytics](/public/doc/6.png)
-*Visual analytics of task completion and project progress*
+###  Unit tests
+![ Unit tests](/public/doc/6.png)
+*pass about 30 test*
 
 ## Features
 
