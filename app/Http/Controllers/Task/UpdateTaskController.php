@@ -4,23 +4,32 @@ namespace App\Http\Controllers\Task;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Task\UpdateTaskRequest;
-use App\Models\Task;
 use App\Services\TaskService;
+use Illuminate\Http\RedirectResponse;
 
 class UpdateTaskController extends Controller
 {
-    public function __construct(
-        private TaskService $taskService
-    ) {}
+    private TaskService $taskService;
 
-    public function __invoke(UpdateTaskRequest $request, Task $task)
+    public function __construct(TaskService $taskService)
     {
-        $this->authorize('update', $task->project);
-        
-        $this->taskService->update($task, $request->validated());
-        
-        return redirect()
-            ->route('projects.show', $task->project_id)
-            ->with('success', 'Task updated successfully');
+        $this->taskService = $taskService;
+    }
+
+    public function __invoke(UpdateTaskRequest $request, int $id): RedirectResponse
+    {
+        try {
+            $this->taskService->updateTask($id, $request->validated());
+
+            return redirect()
+                ->route('tasks.index')
+                ->with('success', __('tasks.updated_successfully'));
+
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', __('tasks.update_failed'));
+        }
     }
 } 

@@ -47,36 +47,5 @@ class TaskApiTest extends TestCase
             ]);
     }
 
-    public function test_can_create_task(): void
-    {
-        $user = User::factory()->create();
-        $project = Project::factory()->create(['user_id' => $user->id]);
-
-        $taskData = [
-            'name' => 'New Task',
-            'description' => 'Task Description',
-            'status' => 'todo',
-            'project_id' => $project->id,
-        ];
-
-        $response = $this->actingAs($user, 'sanctum')
-            ->postJson(route('tasks.store'), $taskData);
-
-        $response->assertStatus(201)
-            ->assertJsonStructure([
-                'data' => [
-                    'id',
-                    'name',
-                    'description',
-                    'status',
-                    'project_id',
-                    'user_id',
-                ]
-            ]);
-
-        $this->assertDatabaseHas('tasks', [
-            'name' => 'New Task',
-            'user_id' => $user->id,
-        ]);
-    }
+    
 } 

@@ -3,24 +3,34 @@
 namespace App\Http\Controllers\Task;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Task\StoreTaskRequest;
+use App\Http\Requests\Task\CreateTaskRequest;
 use App\Services\TaskService;
-use App\Models\Task;
+use Illuminate\Http\RedirectResponse;
 
 class StoreTaskController extends Controller
 {
-    public function __construct(
-        private TaskService $taskService
-    ) {}
+    private TaskService $taskService;
 
-    public function __invoke(StoreTaskRequest $request)
+    public function __construct(TaskService $taskService)
     {
-        $this->authorize('create', [Task::class, $request->project_id]);
-        
-        $task = $this->taskService->create($request->validated());
-        
-        return redirect()
-            ->route('projects.show', $task->project_id)
-            ->with('success', 'Task updated successfully');
+        $this->taskService = $taskService;
+    }
+
+    public function __invoke(CreateTaskRequest $request): RedirectResponse
+    {
+        \Log::info('StoreTaskController was called');
+        // try {
+            $this->taskService->createTask($request->validated());
+
+            return redirect()
+                ->route('tasks.index')
+                ->with('success', __('tasks.created_successfully'));
+
+        // } catch (\Exception $e) {
+        //     return redirect()
+        //         ->back()
+        //         ->withInput()
+        //         ->with('error', __('tasks.create_failed'));
+        // }
     }
 } 

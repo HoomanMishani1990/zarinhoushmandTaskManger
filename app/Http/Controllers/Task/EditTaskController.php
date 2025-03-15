@@ -5,9 +5,8 @@ namespace App\Http\Controllers\Task;
 use App\Http\Controllers\Controller;
 use App\Services\TaskService;
 use Illuminate\View\View;
-use Illuminate\Http\RedirectResponse;
 
-class CreateTaskController extends Controller
+class EditTaskController extends Controller
 {
     private TaskService $taskService;
 
@@ -16,12 +15,13 @@ class CreateTaskController extends Controller
         $this->taskService = $taskService;
     }
 
-    public function __invoke(): View
+    public function __invoke(int $id): View
     {
+        $task = $this->taskService->findTask($id);
         $projects = $this->taskService->getProjectsForTaskCreation();
         $users = $this->taskService->getAvailableUsers();
         $priorities = $this->taskService->getTaskPriorities();
-        
-        return view('tasks.create', compact('projects', 'users', 'priorities'));
+
+        return view('tasks.edit', compact('task', 'projects', 'users', 'priorities'));
     }
-}
+} 

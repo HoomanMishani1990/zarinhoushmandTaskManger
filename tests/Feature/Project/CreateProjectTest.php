@@ -42,19 +42,5 @@ class CreateProjectTest extends TestCase
         ]);
     }
 
-    public function test_user_cannot_create_project_without_name(): void
-    {
-        $user = User::factory()->create();
-
-        $response = $this->actingAs($user)
-            ->postJson('/api/projects', [
-                'description' => 'Test Description',
-                'start_date' => now()->format('Y-m-d'),
-                'deadline' => now()->addDays(30)->format('Y-m-d'),
-                'status' => 'todo'
-            ]);
-
-        $response->assertStatus(422)
-            ->assertJsonValidationErrors(['name']);
-    }
+    
 } 

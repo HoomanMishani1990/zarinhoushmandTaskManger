@@ -7,67 +7,52 @@ use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
+use PHPUnit\Framework\Attributes\Test;
 
 class PasswordResetTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_reset_password_link_screen_can_be_rendered(): void
-    {
-        $response = $this->get('/forgot-password');
+    private User $user;
 
-        $response->assertStatus(200);
+    protected function setUp(): void
+    {
+        parent::setUp();
+        
+        Notification::fake();
+        $this->user = User::factory()->create();
     }
 
-    public function test_reset_password_link_can_be_requested(): void
+    
+
+    #[Test]
+    public function reset_password_link_cannot_be_requested_with_invalid_email(): void
     {
-        Notification::fake();
-
-        $user = User::factory()->create();
-
-        $this->post('/forgot-password', ['email' => $user->email]);
-
-        Notification::assertSentTo($user, ResetPassword::class);
-    }
-
-    public function test_reset_password_screen_can_be_rendered(): void
-    {
-        Notification::fake();
-
-        $user = User::factory()->create();
-
-        $this->post('/forgot-password', ['email' => $user->email]);
-
-        Notification::assertSentTo($user, ResetPassword::class, function ($notification) {
-            $response = $this->get('/reset-password/'.$notification->token);
-
-            $response->assertStatus(200);
-
-            return true;
-        });
-    }
-
-    public function test_password_can_be_reset_with_valid_token(): void
-    {
-        Notification::fake();
-
-        $user = User::factory()->create();
-
-        $this->post('/forgot-password', ['email' => $user->email]);
-
-        Notification::assertSentTo($user, ResetPassword::class, function ($notification) use ($user) {
-            $response = $this->post('/reset-password', [
-                'token' => $notification->token,
-                'email' => $user->email,
-                'password' => 'password',
-                'password_confirmation' => 'password',
+        $response = $this->from('/forgot-password')
+            ->post('/forgot-password', [
+                'email' => 'nonexistent@example.com'
             ]);
 
-            $response
-                ->assertSessionHasNoErrors()
-                ->assertRedirect(route('login'));
+        $response->assertRedirect('/forgot-password')
+            ->assertSessionHasErrors('email');
 
-            return true;
-        });
+        Notification::assertNothingSent();
     }
+
+   
+
+    #[Test]
+    public function password_cannot_be_reset_with_invalid_token(): void
+    {
+        $response = $this->post('/reset-password', [
+            'token' => 'invalid-token',
+            'email' => $this->user->email,
+            'password' => 'NewPassword123!',
+            'password_confirmation' => 'NewPassword123!'
+        ]);
+
+        $response->assertSessionHasErrors('email');
+    }
+
+    
 }

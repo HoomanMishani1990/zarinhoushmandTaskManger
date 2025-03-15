@@ -2,8 +2,9 @@
 
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h1 class="text-2xl font-bold mb-4">{{ __('Tasks_List') }}</h1>
-    <a href="{{ route('tasks.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded">{{ __('Create New Task') }}</a>
+        <h1 class="text-2xl font-bold mb-4">{{ __('Tasks_List') }}</h1>
+
+    <a href="{{ route('tasks.create') }}" class="text-xl bg-blue-500  px-4 py-2 rounded">ایجاد وظیفه جدید</a>
 
     <div class="mt-6">
         @foreach ($tasks as $task)
@@ -12,6 +13,7 @@
                 <p class="text-gray-600">{{ $task->description }}</p>
                 <p class="text-sm text-gray-500">{{ __('Status') }}: {{ $task->status }}</p>
                 <div class="mt-2">
+                    <a href="{{ route('tasks.edit', $task->id) }}" class="text-blue-500">{{ __('Edit') }}</a>
                     
                 </div>
             </div>

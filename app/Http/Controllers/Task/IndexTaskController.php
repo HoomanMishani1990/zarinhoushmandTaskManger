@@ -15,8 +15,6 @@ class IndexTaskController extends Controller
     }
 
 
-
-
     public function __invoke($project)
     {
         $tasks = $this->taskService->getTasksByProject($project);

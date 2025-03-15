@@ -18,7 +18,8 @@ use App\Http\Controllers\Task\{
     ToggleTaskController,
     TaskController,
     IndexTaskController,
-    CreateTaskController
+    CreateTaskController,
+    EditTaskController
 };
 use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
@@ -53,18 +54,12 @@ Route::middleware(['auth'])->group(function () {
     });
     
     // Tasks
-    Route::prefix('tasks')->name('tasks.')->group(function () {
-        
-        Route::post('/', StoreTaskController::class)->name('store');
-        Route::put('/{task}', UpdateTaskController::class)->name('update');
-        Route::delete('/{task}', DeleteTaskController::class)->name('delete');
-        Route::patch('/{task}/toggle', ToggleTaskController::class)->name('toggle');
-    });
+    Route::get('/tasks/create', CreateTaskController::class)->name('tasks.create');
+    Route::post('/tasks/store', StoreTaskController::class)->name('tasks.store');
     Route::get('/taskOfProject/{project}', IndexTaskController::class)->name('project.task.index');
+    Route::get('/tasks/{task}/edit', EditTaskController::class)->name('tasks.edit');
+    Route::put('/tasks/{task}', UpdateTaskController::class)->name('tasks.update');
 
-    Route::get('/kanban', function () {
-        return view('kanban.index');
-    })->name('kanban.index');
 
 
     
@@ -75,8 +70,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
     Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
 
-    Route::get('/tasks/create', CreateTaskController::class)->name('tasks.create');
-
+    
 });
 
 require __DIR__.'/auth.php';

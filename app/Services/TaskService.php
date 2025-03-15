@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Repositories\Interfaces\TaskRepositoryInterface;
+use Illuminate\Support\Facades\Storage;
 
 class TaskService
 {
@@ -10,11 +11,6 @@ class TaskService
     public function __construct(TaskRepositoryInterface $taskRepository)
     {
         $this->taskRepository = $taskRepository;
-    }
-
-    public function getAllTasks()
-    {
-        return $this->taskRepository->all();
     }
 
     public function getProjectsForTaskCreation()
@@ -36,6 +32,7 @@ class TaskService
         ];
     }
 
+
     public function createTask(array $data)
     {
         // Handle file uploads if present
@@ -46,8 +43,22 @@ class TaskService
         return $this->taskRepository->create($data);
     }
 
-    public function updateTask(array $data, $id)
+    public function updateTask(int $id, array $data)
     {
+        $task = $this->taskRepository->find($id);
+
+        // Handle file removals if any
+        if (!empty($data['remove_attachments'])) {
+            $this->removeAttachments($task, $data['remove_attachments']);
+            unset($data['remove_attachments']);
+        }
+
+        // Handle new file uploads if any
+        if (isset($data['attachments'])) {
+            $newAttachments = $this->handleAttachments($data['attachments']);
+            $data['attachments'] = array_merge($task->attachments ?? [], $newAttachments);
+        }
+
         return $this->taskRepository->update($data, $id);
     }
 
@@ -66,6 +77,11 @@ class TaskService
         return $this->taskRepository->getTasksByProject($projectId);
     }
 
+    public function findTask(int $id)
+    {
+        return $this->taskRepository->find($id);
+    }
+
     private function handleAttachments(array $files)
     {
         $attachments = [];
@@ -79,5 +95,21 @@ class TaskService
             ];
         }
         return $attachments;
+    }
+
+    private function removeAttachments($task, array $pathsToRemove)
+    {
+        // Remove files from storage
+        foreach ($pathsToRemove as $path) {
+            Storage::disk('public')->delete($path);
+        }
+
+        // Update task attachments array
+        $remainingAttachments = array_filter($task->attachments ?? [], function($attachment) use ($pathsToRemove) {
+            return !in_array($attachment['path'], $pathsToRemove);
+        });
+
+        $task->attachments = array_values($remainingAttachments);
+        $task->save();
     }
 }
