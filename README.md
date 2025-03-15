@@ -4,9 +4,9 @@ A comprehensive task management system built with Laravel, featuring project org
 
 ## Screenshots
 
-### Task Creation
-![Task Creation Form](/public/doc/1.png)
-*Create new tasks with detailed information including priority and due dates*
+### Task Management API
+![API Documentation for Task Management System](/public/doc/1.png)
+*API Documentation for Task Management System*
 
 ### Project Dashboard
 ![Project Dashboard](/public/doc/2.png)
