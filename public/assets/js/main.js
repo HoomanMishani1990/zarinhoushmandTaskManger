@@ -4,11 +4,12 @@
 
 'use strict';
 
-let isRtl = window.Helpers.isRtl(),
-  isDarkStyle = window.Helpers.isDarkStyle(),
+let isRtl = true,
+  isDarkStyle = false,
   menu,
   animate,
   isHorizontalLayout = false;
+  let templateName = 'vertical-menu-light';
 
 if (document.getElementById('layout-menu')) {
   isHorizontalLayout = document.getElementById('layout-menu').classList.contains('menu-horizontal');

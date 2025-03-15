@@ -11,6 +11,6 @@ class ShowProjectController extends Controller
     {
         // $this->authorize('view', $project);
         
-        return view('projects.show', compact('project'));
+        return view('projects.edit', compact('project'));
     }
 } 

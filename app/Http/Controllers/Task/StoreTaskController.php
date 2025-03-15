@@ -21,6 +21,6 @@ class StoreTaskController extends Controller
         
         return redirect()
             ->route('projects.show', $task->project_id)
-            ->with('success', 'Task created successfully');
+            ->with('success', 'Task updated successfully');
     }
 } 

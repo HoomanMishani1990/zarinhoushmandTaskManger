@@ -16,7 +16,9 @@ use App\Http\Controllers\Task\{
     UpdateTaskController,
     DeleteTaskController,
     ToggleTaskController,
-    TaskController
+    TaskController,
+    IndexTaskController,
+    CreateTaskController
 };
 use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
@@ -44,7 +46,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{project}', ShowProjectController::class)->name('show');
         Route::post('/', StoreProjectController::class)->name('store');
         Route::put('/{project}', UpdateProjectController::class)->name('update');
-        Route::delete('/{project}', DeleteProjectController::class)->name('delete');
+        Route::delete('/{project}', DeleteProjectController::class)->name('destroy');
         Route::get('/{project}/edit', EditProjectController::class)->name('edit');
 
 
@@ -52,25 +54,28 @@ Route::middleware(['auth'])->group(function () {
     
     // Tasks
     Route::prefix('tasks')->name('tasks.')->group(function () {
+        
         Route::post('/', StoreTaskController::class)->name('store');
         Route::put('/{task}', UpdateTaskController::class)->name('update');
         Route::delete('/{task}', DeleteTaskController::class)->name('delete');
         Route::patch('/{task}/toggle', ToggleTaskController::class)->name('toggle');
     });
+    Route::get('/taskOfProject/{project}', IndexTaskController::class)->name('project.task.index');
 
     Route::get('/kanban', function () {
         return view('kanban.index');
     })->name('kanban.index');
 
-    Route::apiResource('tasks', TaskController::class);
-    Route::patch('/tasks/{task}/status', [TaskController::class, 'updateStatus'])
-        ->name('tasks.update-status');
+
+    
 
     // Notifications
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.mark-read');
     Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.mark-all-read');
     Route::delete('/notifications/{id}', [NotificationController::class, 'destroy'])->name('notifications.destroy');
+
+    Route::get('/tasks/create', CreateTaskController::class)->name('tasks.create');
 
 });
 

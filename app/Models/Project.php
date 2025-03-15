@@ -29,6 +29,7 @@ class Project extends Model
         'comments_count',
         'status',
         'image_path',
+        'user_id',
     ];
 
     protected $casts = [

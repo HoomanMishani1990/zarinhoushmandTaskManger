@@ -48,12 +48,7 @@ class MenuServiceProvider extends ServiceProvider
                 'title' => 'وظایف',
                 'route' => 'tasks.index',
                 'icon' => 'bx-check-square',
-            ],
-            [
-                'title' => 'تخته کانبان',
-                'route' => 'kanban.index',
-                'icon' => 'bx-grid',
-            ],
+            ]
             // Add more menu items as needed
         ];
     }

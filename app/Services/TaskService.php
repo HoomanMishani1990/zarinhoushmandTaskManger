@@ -1,31 +1,83 @@
 <?php
-
 namespace App\Services;
 
-use App\Models\Task;
-use App\Models\Project;
+use App\Repositories\Interfaces\TaskRepositoryInterface;
 
 class TaskService
 {
-    public function create(array $data): Task
+    private TaskRepositoryInterface $taskRepository;
+
+    public function __construct(TaskRepositoryInterface $taskRepository)
     {
-        return Task::create($data);
+        $this->taskRepository = $taskRepository;
     }
 
-    public function update(Task $task, array $data): bool
+    public function getAllTasks()
     {
-        return $task->update($data);
+        return $this->taskRepository->all();
     }
 
-    public function toggleComplete(Task $task): bool
+    public function getProjectsForTaskCreation()
     {
-        return $task->update([
-            'is_completed' => !$task->is_completed
-        ]);
+        return $this->taskRepository->getProjectsForTaskCreation();
     }
 
-    public function delete(Task $task): bool
+    public function getAvailableUsers()
     {
-        return $task->delete();
+        return $this->taskRepository->getAvailableUsers();
     }
-} 
+
+    public function getTaskPriorities()
+    {
+        return [
+            'low' => __('tasks.priority_low'),
+            'medium' => __('tasks.priority_medium'),
+            'high' => __('tasks.priority_high')
+        ];
+    }
+
+    public function createTask(array $data)
+    {
+        // Handle file uploads if present
+        if (isset($data['attachments'])) {
+            $data['attachments'] = $this->handleAttachments($data['attachments']);
+        }
+
+        return $this->taskRepository->create($data);
+    }
+
+    public function updateTask(array $data, $id)
+    {
+        return $this->taskRepository->update($data, $id);
+    }
+
+    public function deleteTask($id)
+    {
+        return $this->taskRepository->delete($id);
+    }
+
+    public function getTaskById($id)
+    {
+        return $this->taskRepository->find($id);
+    }
+
+    public function getTasksByProject($projectId)
+    {
+        return $this->taskRepository->getTasksByProject($projectId);
+    }
+
+    private function handleAttachments(array $files)
+    {
+        $attachments = [];
+        foreach ($files as $file) {
+            $path = $file->store('task-attachments', 'public');
+            $attachments[] = [
+                'name' => $file->getClientOriginalName(),
+                'path' => $path,
+                'size' => $file->getSize(),
+                'type' => $file->getMimeType()
+            ];
+        }
+        return $attachments;
+    }
+}

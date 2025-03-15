@@ -26,7 +26,7 @@
                                                 </div>
                                                 <div class="me-2">
                                                     <h5 class="mb-1">
-                                                        <a href="{{ route('projects.show', $project) }}" class="h5 stretched-link">
+                                                        <a href="{{ route('project.task.index', $project) }}" class="h5 stretched-link">
                                                             {{ $project->name }}
                                                         </a>
                                                     </h5>
@@ -48,7 +48,7 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a class="dropdown-item" href="{{ route('projects.show', $project) }}">
+                                                            <a class="dropdown-item" href="{{ route('project.task.index', $project) }}">
                                                                 {{ __('View Details') }}
                                                             </a>
                                                         </li>
@@ -116,25 +116,25 @@
                                         <div class="d-flex align-items-center">
                                             <div class="d-flex align-items-center">
                                                 <ul class="list-unstyled d-flex align-items-center avatar-group mb-0 zindex-2">
-                                                    @foreach($project->members()->take(3) as $member)
-                                                    <li data-bs-toggle="tooltip" 
-                                                        data-popup="tooltip-custom" 
-                                                        data-bs-placement="top" 
-                                                        class="avatar avatar-sm pull-up" 
-                                                        aria-label="{{ $member->name }}" 
-                                                        data-bs-original-title="{{ $member->name }}">
-                                                        <img class="rounded-circle" 
-                                                             src="{{ $member->profile_photo_url }}" 
-                                                             alt="{{ $member->name }}">
-                                                    </li>
+                                                    @foreach($project->members->take(3) as $member)
+                                                        <li data-bs-toggle="tooltip"
+                                                            data-popup="tooltip-custom"
+                                                            data-bs-placement="top"
+                                                            class="avatar avatar-sm pull-up"
+                                                            aria-label="{{ $member->name }}"
+                                                            data-bs-original-title="{{ $member->name }}">
+                                                            <img class="rounded-circle"
+                                                                src="{{ $member->profile_photo_url }}"
+                                                                alt="{{ $member->name }}">
+                                                        </li>
                                                     @endforeach
-                                                    <li><small>{{ $project->members_count }} {{ __('members') }}</small></li>
+                                                   
                                                 </ul>
                                             </div>
                                             <div class="ms-auto">
-                                                <a href="{{ route('projects.comments.index', $project) }}" class="text-body">
-                                                    <i class="bx bx-chat"></i> {{ $project->comments_count }}
-                                                </a>
+                                                <li>
+                                                    <small>{{ $project->members_count }} members</small>
+                                                </li>
                                             </div>
                                         </div>
                                     </div>

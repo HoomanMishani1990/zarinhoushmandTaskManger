@@ -107,5 +107,32 @@
     "Spent Hours": "ساعات صرف شده",
     "Total Tasks": "تعداد کل وظایف",
     "Completed Tasks": "تعداد وظایف تکمیل شده",
-    "Progress Percentage": "درصد پیشرفت"
+    "Progress Percentage": "درصد پیشرفت",
+
+    "priority.low": "کم",
+    "priority.medium": "متوسط",
+    "priorityhigh": "بالا",
+ 
+    "due_date": "تاریخ سررسید",
+
+    "tasks.create_task": "ایجاد وظیفه جدید",
+    "tasks.create_new_task": "ایجاد وظیفه جدید",
+    "tasks.title": "عنوان",
+    "tasks.project": "پروژه",
+    "tasks.select_project": "پروژه را انتخاب کنید",
+    "tasks.description": "توضیحات",
+    "tasks.assign_to": "محول به",
+    "tasks.select_user": "کاربر را انتخاب کنید",
+    "tasks.priority": "اولویت",
+    "tasks.due_date": "تاریخ سررسید",
+    "tasks.estimated_hours": "زمان تخمینی (ساعت)",
+    "tasks.attachments": "پیوست‌ها",
+    "tasks.choose_files": "انتخاب فایل‌ها",
+    "common.cancel": "انصراف",
+    "tasks.priority_low": "کم",
+    "tasks.priority_medium": "متوسط",
+    "tasks.priority_high": "زیاد",
+    "Tasks_List": "لیست وظایف",
+    "Create_New_Task": "ایجاد وظیفه جدید"
+    
 } 

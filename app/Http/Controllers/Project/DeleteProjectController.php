@@ -16,10 +16,10 @@ class DeleteProjectController extends Controller
     {
         $this->authorize('delete', $project);
         
-        $this->projectService->deleteProject($project);
+        $this->projectService->deleteProject($project->id);
         
         return redirect()
             ->route('projects.index')
-            ->with('success', 'Project deleted successfully');
+            ->with('success', 'پروژه با موفقیت حذف شد.');
     }
 } 

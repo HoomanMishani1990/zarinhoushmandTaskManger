@@ -19,8 +19,7 @@ class UpdateProjectController extends Controller
         
         $this->projectService->update($project, $request->validated());
         
-        return redirect()
-            ->route('projects.show', $project)
+        return redirect()->route('projects.index')
             ->with('success', 'Project updated successfully');
     }
 } 

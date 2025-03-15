@@ -64,7 +64,7 @@
                     </table>
                 </div>
                 <div class="mt-4">
-                    {{ $projects->links() }}
+                  
                 </div>
             @endif
         </div>

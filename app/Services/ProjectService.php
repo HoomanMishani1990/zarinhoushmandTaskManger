@@ -40,9 +40,10 @@ class ProjectService
     /**
      * Update existing project
      */
-    public function updateProject(int $id, array $data)
+    
+    public function update($project, array $data)
     {
-        return $this->projectRepository->update($data, $id);
+        return $this->projectRepository->update($data, $project->id);
     }
 
     /**
@@ -101,4 +102,6 @@ class ProjectService
             })
             ->count();
     }
+
+    
 } 

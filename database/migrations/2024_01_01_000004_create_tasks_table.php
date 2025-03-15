@@ -15,6 +15,8 @@ return new class extends Migration
             $table->string('name');
             $table->text('description');
             $table->enum('status', ['todo', 'in_progress', 'done'])->default('todo');
+            $table->enum('priority', ['low', 'medium', 'high'])->default('medium'); // Add priority
+            $table->date('due_date')->nullable();
             $table->timestamps();
         });
     }

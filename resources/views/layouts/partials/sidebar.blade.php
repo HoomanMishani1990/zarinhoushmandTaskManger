@@ -45,13 +45,7 @@
             </a>
         </li>
 
-        <!-- Kanban Board -->
-        <li class="menu-item {{ request()->routeIs('kanban.*') ? 'active' : '' }}">
-            <a href="{{ route('kanban.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-grid"></i>
-                <div>{{ __('Kanban Board') }}</div>
-            </a>
-        </li>
+       
 
         @if(auth()->user()->isAdmin())
         <!-- Admin Section -->

@@ -19,11 +19,12 @@ class StoreProjectController extends Controller
     /**
      * Store a newly created project in storage.
      */
-    public function __invoke(StoreProjectRequest $request): RedirectResponse
+    public function __invoke(StoreProjectRequest $request)
     {
-        
+        $data = $request->validated();
+        $data['user_id'] = auth()->id();
 
-        $this->projectService->createProject($request->validated());
+        $this->projectService->createProject($data);
 
         return redirect()->route('projects.index')->with('success', __('پروژه با موفقیت ایجاد شد.'));
     }
