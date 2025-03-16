@@ -21,10 +21,19 @@ class EditProjectController extends Controller
      */
     public function __invoke(Project $project): View
     {
-        $this->authorize('update', $project);
+        try{
+            $this->authorize('update', $project);
 
-        return view('projects.edit', [
-            'project' => $this->projectService->findProject($project->id)
-        ]);
+            return view('projects.edit', [
+                'project' => $this->projectService->findProject($project->id)
+            ]);
+        }
+        catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', $e->getMessage());
+        }
+        
     }
 } 

@@ -14,12 +14,20 @@ class DeleteProjectController extends Controller
 
     public function __invoke(Project $project)
     {
-        $this->authorize('delete', $project);
-        
-        $this->projectService->deleteProject($project->id);
-        
-        return redirect()
-            ->route('projects.index')
-            ->with('success', 'پروژه با موفقیت حذف شد.');
+        try{
+            $this->authorize('delete', $project);
+            
+            $this->projectService->deleteProject($project->id);
+            
+            return redirect()
+                ->route('projects.index')
+                    ->with('success', 'پروژه با موفقیت حذف شد.');
+        }
+        catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', $e->getMessage());
+        }
     }
 } 

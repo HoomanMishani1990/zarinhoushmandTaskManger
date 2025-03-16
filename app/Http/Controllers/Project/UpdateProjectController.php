@@ -15,11 +15,19 @@ class UpdateProjectController extends Controller
 
     public function __invoke(UpdateProjectRequest $request, Project $project)
     {
-        $this->authorize('update', $project);
+        try{
+            $this->authorize('update', $project);
         
-        $this->projectService->update($project, $request->validated());
-        
-        return redirect()->route('projects.index')
-            ->with('success', 'Project updated successfully');
+            $this->projectService->update($project, $request->validated());
+            
+            return redirect()->route('projects.index')
+                ->with('success', 'Project updated successfully');    
+        }
+        catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', $e->getMessage());
+        }
     }
 } 

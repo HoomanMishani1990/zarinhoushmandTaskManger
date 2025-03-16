@@ -12,6 +12,13 @@ class CreateProjectController extends Controller
      */
     public function __invoke(): View
     {
-        return view('projects.create');
-    }
+        try{    
+            return view('projects.create');
+        }
+        catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', $e->getMessage());
+        }
 } 

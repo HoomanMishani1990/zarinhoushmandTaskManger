@@ -14,12 +14,20 @@ class DeleteTaskController extends Controller
 
     public function __invoke(Task $task)
     {
-        $this->authorize('delete', $task->project);
+        try {
+            $this->authorize('delete', $task->project);
         
-        $this->taskService->delete($task);
+            $this->taskService->delete($task);
+            
+            return redirect()
+                ->route('projects.show', $task->project_id)
+                ->with('success', 'Task deleted successfully');
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', $e->getMessage());
+        }
         
-        return redirect()
-            ->route('projects.show', $task->project_id)
-            ->with('success', 'Task deleted successfully');
     }
 } 

@@ -17,8 +17,16 @@ class IndexTaskController extends Controller
 
     public function __invoke($project)
     {
-        $tasks = $this->taskService->getTasksByProject($project);
+        try {
+            $tasks = $this->taskService->getTasksByProject($project);
 
-        return view('tasks.index', compact('tasks'));   
+            return view('tasks.index', compact('tasks'));  
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', $e->getMessage());
+        }
+        
     }
 }

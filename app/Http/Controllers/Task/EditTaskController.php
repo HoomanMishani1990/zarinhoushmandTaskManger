@@ -17,11 +17,18 @@ class EditTaskController extends Controller
 
     public function __invoke(int $id): View
     {
-        $task = $this->taskService->findTask($id);
-        $projects = $this->taskService->getProjectsForTaskCreation();
-        $users = $this->taskService->getAvailableUsers();
-        $priorities = $this->taskService->getTaskPriorities();
-
-        return view('tasks.edit', compact('task', 'projects', 'users', 'priorities'));
+        try {
+            $task = $this->taskService->findTask($id);
+            $projects = $this->taskService->getProjectsForTaskCreation();
+            $users = $this->taskService->getAvailableUsers();
+            $priorities = $this->taskService->getTaskPriorities();
+    
+            return view('tasks.edit', compact('task', 'projects', 'users', 'priorities'));
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', $e->getMessage());
+        }
     }
 } 

@@ -18,10 +18,19 @@ class CreateTaskController extends Controller
 
     public function __invoke(): View
     {
-        $projects = $this->taskService->getProjectsForTaskCreation();
-        $users = $this->taskService->getAvailableUsers();
-        $priorities = $this->taskService->getTaskPriorities();
+        try{
+            $projects = $this->taskService->getProjectsForTaskCreation();
+            $users = $this->taskService->getAvailableUsers();
+            $priorities = $this->taskService->getTaskPriorities();
+            
+            return view('tasks.create', compact('projects', 'users', 'priorities'));
+        }
+        catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', $e->getMessage());
+        }
         
-        return view('tasks.create', compact('projects', 'users', 'priorities'));
     }
 }

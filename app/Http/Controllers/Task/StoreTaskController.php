@@ -19,18 +19,18 @@ class StoreTaskController extends Controller
     public function __invoke(CreateTaskRequest $request): RedirectResponse
     {
         \Log::info('StoreTaskController was called');
-        // try {
+        try {
             $this->taskService->createTask($request->validated());
 
             return redirect()
                 ->route('tasks.index')
                 ->with('success', __('tasks.created_successfully'));
 
-        // } catch (\Exception $e) {
-        //     return redirect()
-        //         ->back()
-        //         ->withInput()
-        //         ->with('error', __('tasks.create_failed'));
-        // }
+        } catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', __('tasks.create_failed'));
+        }
     }
 } 

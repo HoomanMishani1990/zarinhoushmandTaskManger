@@ -9,8 +9,16 @@ class ShowProjectController extends Controller
 {
     public function __invoke(Project $project)
     {
-        // $this->authorize('view', $project);
+        try{
+            return view('projects.edit', compact('project'));
+        }
+        catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', $e->getMessage());
+        }
         
-        return view('projects.edit', compact('project'));
+        
     }
 } 

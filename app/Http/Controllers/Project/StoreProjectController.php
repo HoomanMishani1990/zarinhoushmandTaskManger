@@ -21,11 +21,20 @@ class StoreProjectController extends Controller
      */
     public function __invoke(StoreProjectRequest $request)
     {
-        $data = $request->validated();
-        $data['user_id'] = auth()->id();
-
-        $this->projectService->createProject($data);
-
-        return redirect()->route('projects.index')->with('success', __('پروژه با موفقیت ایجاد شد.'));
+        try{
+            $data = $request->validated();
+            $data['user_id'] = auth()->id();
+    
+            $this->projectService->createProject($data);
+    
+            return redirect()->route('projects.index')->with('success', __('پروژه با موفقیت ایجاد شد.'));
+               
+        }
+        catch (\Exception $e) {
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('error', $e->getMessage());
+        }
     }
 } 
