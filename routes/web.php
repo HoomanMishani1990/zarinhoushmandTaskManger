@@ -59,6 +59,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/taskOfProject/{project}', IndexTaskController::class)->name('project.task.index');
     Route::get('/tasks/{task}/edit', EditTaskController::class)->name('tasks.edit');
     Route::put('/tasks/{task}', UpdateTaskController::class)->name('tasks.update');
+    Route::delete('/tasks/{task}', DeleteTaskController::class)->name('tasks.destroy');
 
 
 

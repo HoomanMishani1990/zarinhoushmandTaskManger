@@ -26,15 +26,16 @@ class StoreProjectController extends Controller
             $data['user_id'] = auth()->id();
     
             $this->projectService->createProject($data);
-    
-            return redirect()->route('projects.index')->with('success', __('پروژه با موفقیت ایجاد شد.'));
-               
+
+            return redirect()
+            ->route('projects.index')
+            ->with('success', __('projects.created_successfully'));
         }
         catch (\Exception $e) {
             return redirect()
                 ->back()
                 ->withInput()
-                ->with('error', $e->getMessage());
+                ->with('error', __('projects.create_failed'));
         }
     }
 } 

@@ -17,7 +17,7 @@ class DeleteTaskController extends Controller
         try {
             $this->authorize('delete', $task->project);
         
-            $this->taskService->delete($task);
+            $this->taskService->deleteTask($task->id);
             
             return redirect()
                 ->route('projects.show', $task->project_id)

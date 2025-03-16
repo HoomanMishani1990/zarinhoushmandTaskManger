@@ -14,7 +14,13 @@
                 <p class="text-sm text-gray-500">{{ __('Status') }}: {{ $task->status }}</p>
                 <div class="mt-2">
                     <a href="{{ route('tasks.edit', $task->id) }}" class="text-blue-500">{{ __('Edit') }}</a>
-                    
+                    <form action="{{ route('tasks.destroy', $task->id) }}" method="POST" class="inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-red-500 mr-2" onclick="return confirm('آیا از حذف این وظیفه اطمینان دارید؟')">
+                            {{ __('Delete') }}
+                        </button>
+                    </form>
                 </div>
             </div>
         @endforeach
