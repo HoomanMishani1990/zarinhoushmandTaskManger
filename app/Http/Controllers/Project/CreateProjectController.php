@@ -21,4 +21,5 @@ class CreateProjectController extends Controller
                 ->withInput()
                 ->with('error', $e->getMessage());
         }
-} 
+    }
+}
