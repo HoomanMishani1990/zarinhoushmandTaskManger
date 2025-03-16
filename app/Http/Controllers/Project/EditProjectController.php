@@ -19,7 +19,7 @@ class EditProjectController extends Controller
     /**
      * Show project edit form
      */
-    public function __invoke(Project $project): View
+    public function __invoke(Project $project): View|RedirectResponse
     {
         try{
             $this->authorize('update', $project);

@@ -34,7 +34,7 @@ class CreateProjectTest extends TestCase
         ]);
 
         $response->assertRedirect(route('projects.index'))
-            ->assertSessionHas('success', 'پروژه با موفقیت ایجاد شد.');
+            ->assertSessionHas('success', __('projects.created_successfully'));
 
         $this->assertDatabaseHas('projects', [
             'name' => 'New Project',

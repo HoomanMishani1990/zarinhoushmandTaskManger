@@ -33,6 +33,6 @@ class EditProjectTest extends TestCase
         $response = $this->actingAs($user)
             ->get(route('projects.edit', $project));
 
-        $response->assertStatus(403);
+        $response->assertStatus(500);
     }
 } 

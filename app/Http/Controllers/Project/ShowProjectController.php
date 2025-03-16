@@ -7,7 +7,7 @@ use App\Models\Project;
 
 class ShowProjectController extends Controller
 {
-    public function __invoke(Project $project)
+    public function __invoke(Project $project): View|RedirectResponse
     {
         try{
             return view('projects.edit', compact('project'));

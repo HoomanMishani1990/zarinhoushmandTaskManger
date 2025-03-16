@@ -13,7 +13,7 @@ class UpdateProjectController extends Controller
         private ProjectService $projectService
     ) {}
 
-    public function __invoke(UpdateProjectRequest $request, Project $project)
+    public function __invoke(UpdateProjectRequest $request, Project $project): RedirectResponse
     {
         try{
             $this->authorize('update', $project);

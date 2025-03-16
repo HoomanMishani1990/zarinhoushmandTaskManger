@@ -10,7 +10,7 @@ class CreateProjectController extends Controller
     /**
      * Display the project creation form.
      */
-    public function __invoke(): View
+    public function __invoke(): View|RedirectResponse
     {
         try{    
             return view('projects.create');

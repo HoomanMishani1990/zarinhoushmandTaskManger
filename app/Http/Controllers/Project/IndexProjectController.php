@@ -11,7 +11,7 @@ class IndexProjectController extends Controller
         private ProjectService $projectService
     ) {}
 
-    public function __invoke()
+    public function __invoke(): View|RedirectResponse
     {
         try{
             $projects = $this->projectService->getUserProjects(auth()->id());

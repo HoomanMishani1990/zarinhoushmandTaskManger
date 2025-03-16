@@ -15,7 +15,7 @@ class EditTaskController extends Controller
         $this->taskService = $taskService;
     }
 
-    public function __invoke(int $id): View
+    public function __invoke(int $id): View|RedirectResponse
     {
         try {
             $task = $this->taskService->findTask($id);

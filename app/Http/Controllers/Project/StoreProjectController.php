@@ -19,7 +19,7 @@ class StoreProjectController extends Controller
     /**
      * Store a newly created project in storage.
      */
-    public function __invoke(StoreProjectRequest $request)
+    public function __invoke(StoreProjectRequest $request): RedirectResponse
     {
         try{
             $data = $request->validated();
