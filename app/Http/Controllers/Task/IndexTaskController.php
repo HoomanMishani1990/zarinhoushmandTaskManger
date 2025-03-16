@@ -15,7 +15,7 @@ class IndexTaskController extends Controller
     }
 
 
-    public function __invoke($project): View|RedirectResponse
+    public function __invoke($project)
     {
         try {
             $tasks = $this->taskService->getTasksByProject($project);
